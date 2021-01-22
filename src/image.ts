@@ -34,7 +34,7 @@ function image() {
           name: 'sizes',
           message: '选择大小',
           type: 'checkbox',
-          choices: ['28x28', '108x108', '128x128', '256x256', '512x512', '1080x1920'],
+          choices: ['28x28', '108x108', '128x128', '256x256', '480x800', '512x512', '1080x1920'],
           validate: (input) => {
             return input.length > 0 ? true : '请选择大小';
           },
