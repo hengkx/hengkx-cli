@@ -24,7 +24,7 @@ function image() {
         name: 'type',
         message: '类型',
         type: 'list',
-        choices: ['改变大小', '重命名'],
+        choices: ['改变大小', '自定义大小', '重命名'],
         validate: (input) => {
           return input.length > 0 ? true : '请选择大小';
         },
@@ -49,6 +49,28 @@ function image() {
                 .resize(parseInt(width), parseInt(height), { fit: 'fill' })
                 .toFile(`${name} ${size}${ext}`);
             });
+          }),
+        );
+      } else if (type === '自定义大小') {
+        const { width, height } = await inquirer.prompt([
+          {
+            name: 'width',
+            message: '宽度',
+            type: 'number',
+          },
+          {
+            name: 'height',
+            message: '高度',
+            type: 'number',
+          },
+        ]);
+        await Promise.all(
+          files.map((fileName: string) => {
+            const ext = path.extname(fileName);
+            const name = path.basename(fileName, ext);
+            return sharp(fileName)
+              .resize(parseInt(width), parseInt(height), { fit: 'fill' })
+              .toFile(`${name} ${width}x${height}${ext}`);
           }),
         );
       } else {
